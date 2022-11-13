@@ -1,18 +1,43 @@
+import numpy as np
 import cv2
 
+
+face_cascade_db = cv2.CascadeClassifier(cv2.data.haarcascades+"haarcascade_frontalface_default.xml")
+recognizer = cv2.face.LBPHFaceRecognizer_create()
+recognizer.read('trainner.yml')
+
 cap_cam = cv2.VideoCapture(0)
-#face_cascade_db = cv2.CascadeClassifier(cv2.data.haarcascades+"haarcascade_frontalface_default.xml")
-#cap_cam_gray = cv2.cvtColor(cap_cam, cv2.COLOR_BGR2GRAY)
-#faces = face_cascade_db.detectMultiScale(cap_cam_gray, 1.1, 19)
-#for (x, y, w, h) in faces:
-    #cv2.rectangle(cap_cam, (x, y), (x+w, y+h), (0, 255, 0), 2)
 
-cap_cam.set(3, 750)
-cap_cam.set(4, 500)
+
+
 while True:
-    succes, img = cap_cam.read()
-    cv2.imshow('Result', img[:, ::-1]) #зеркальный вид видео
-    #cv2.imshow('Result', img)   # стандартный вид видео
+    # цикл считывающий кадры видео ряда
+   ret, frame =cap_cam.read()
+   gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+   faces = face_cascade_db.detectMultiScale(frame, scaleFactor=1.5,minNeighbors=5)
 
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
+   for(x, y, w, h) in faces:
+      # print(x, y, w, h)
+       roi_gray = gray[y:y + h, x:x + w]#region of interest location of frame
+       roi_color=frame[y:y+h, x:x+w]
+
+       id_, conf = recognizer.predict(roi_gray)
+       if conf >= 45 and conf <= 85:
+           print (id_)
+       img_item='my-image.png'
+       cv2.imwrite(img_item,roi_gray) #сохраняем изображение
+
+       cv2.rectangle(frame, (x, y), (x + w, y + h),  (0, 200, 0),2)  # прямоугольник вокруг лица ||| цвет BGR (можно поменять цвет)
+       # '''''
+
+       cv2.imshow('Face', frame[:, ::-1])  # отзеркалить выводимое видео
+       cv2.waitKey(1)
+#cv2.imshow('Face',gray)
+
+        #if cv2.waitKey(1) &0xff == ord('f'): #окончить цикл нажав на кнопку
+         #   break
+        #else:
+        #    continue
+
+cap_cam.release()
+cv2.destroyAllWindows()
