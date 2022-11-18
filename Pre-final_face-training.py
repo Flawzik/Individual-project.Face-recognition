@@ -29,7 +29,7 @@ for root, dirs, files in os.walk(image_dir):
             x_train.append(path)# в нампай массив
             pil_image = Image.open(path).convert('L') # серый слой
             size = (550, 550)
-            final_image = pil_image.resize(size, Image.Resampling.LANCZOS)
+            final_image = pil_image.resize(size, Image.ANTIALIAS)
             image_array = np.array(final_image, "uint8")
            # print(image_array)
             faces = face_cascade_db.detectMultiScale(image_array)
