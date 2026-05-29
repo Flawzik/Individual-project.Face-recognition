@@ -13,4 +13,4 @@ re_img = cv2.resize(img, (800, 1000))
 
 cv2.imshow('result', re_img)
 cv2.waitKey()
-#cv2.destroyAllWindows()
+
