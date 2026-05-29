@@ -54,8 +54,7 @@ for image in os.listdir(BASE_DIR):
       im.convert("RGBA").save(f"{BASE_DIR}2.png")
 """
 
-#print(y_labels)
-#print(x_train)
+
 
 with open('labels.pickle', 'wb') as f:
     pickle.dump(labels_ids, f)
