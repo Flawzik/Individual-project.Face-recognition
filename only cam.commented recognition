@@ -17,7 +17,7 @@ while True:
    faces = face_cascade_db.detectMultiScale(frame, scaleFactor=1.5,minNeighbors=5)
 
    for(x, y, w, h) in faces:
-      # print(x, y, w, h)
+      
        roi_gray = gray[y:y + h, x:x + w]#region of interest location of frame
        roi_color=frame[y:y+h, x:x+w]
 
