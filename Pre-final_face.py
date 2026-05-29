@@ -9,8 +9,7 @@ from csv import writer
 from csv import DictWriter
 import datetime
 face_cascade = cv2.CascadeClassifier('cascades/data/haarcascade_frontalface_alt2.xml')
-#eye_cascade = cv2.CascadeClassifier(cv2.data.haarcascades+ 'cascades/data/haarcascade_eye.yml')
-#smile_cascade = cv2.CascadeClassifier(cv2.data.haarcascades+ 'cascades/data/haarcascade_smile.xml')
+
 recognizer = cv2.face.LBPHFaceRecognizer_create()
 recognizer.read('train.yml')
 labels = {"имя_ученика" : 1}
