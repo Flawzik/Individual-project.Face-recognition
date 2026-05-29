@@ -35,7 +35,7 @@ with open('labels.pickle', 'rb') as f:
 
 cap_cam = cv2.VideoCapture(0)
 while True:
-    # цикл считывающий кадры видео ряда
+
    ret, frame =cap_cam.read()
    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
    faces = face_cascade.detectMultiScale(frame, scaleFactor=1.5, minNeighbors=5)
